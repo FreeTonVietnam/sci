@@ -1,0 +1,133 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Free TON VN</title>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/src/css/main.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="spinner-border text-dark d-none" id="spinner"
+     style="position: fixed; top: 50%; left: 50%; margin-top: -1.5rem; margin-left: -1.5rem; width: 3rem; height: 3rem;"
+     role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<div class="container-fluid" id="container">
+    <div class="row">
+        <div class="col-1">
+
+        </div>
+
+        <div class="col-2 menu">
+            <p class="pre-header">developed by</p>
+            <h2 class="title-header"><a href="#">Free TON VN</a></h2>
+            <nav class="nav header-nav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                </ul>
+            </nav>
+            <div class="nav header-social">
+                <a href="#"><i class="fa fa-lg fa-github" style="font-size: 24px"></i></a>
+                <a href="#"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
+            </div>
+        </div>
+
+        <div class="col-6 content rounded">
+            <h2 class="content-header"></h2>
+            <p class="hello-text">Simple and safety way for access to Free TON smart-contracts. Just use contract address and ABI for  getting function list and call any methods. If you need an access to auth method fill passphrase.
+                We don't save or transamit your passphrase to our servers.</p><br/>
+
+            <div class="input-forms">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="rd_main" name="rd" class="custom-control-input" value="main.ton.dev" checked>
+                    <label class="custom-control-label grey" for="rd_main">Main.ton.dev</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="rn_net" name="rd" class="custom-control-input" value="net.ton.dev">
+                    <label class="custom-control-label grey" for="rn_net">Net.ton.dev</label>
+                </div>
+
+                <div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Address</span>
+                    </div>
+                    <input type="text" id="address" class="form-control"/>
+                </div>
+
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">*.abi.json</span>
+                    </div>
+                    <textarea class="form-control" id="abiText" rows="6"></textarea>
+                </div>
+
+                <label style="margin-top: 5px;" class="btn btn-sm btn-secondary pull-right">
+                    Upload ABI file <input type="file" id="abiFile" accept="*.json" hidden>
+                </label>
+
+                <div class="input-group input-group-sm mb-12 wrapper" style="margin-top: 45px !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Passphrase</span>
+                    </div>
+                    <input type="password" id="seed" class="form-control"/>
+                    <span class="symbol-input200" style="position: absolute; top: 5px; left: 97%">
+                                <a href="#"><i class="fa fa-fw fa-eye eye-password"></i></a>
+                    </span>
+                </div>
+
+                <button type="button" style="margin-top: 5%;" class="btn btn-secondary btn-sm btn-block" onclick="connectToAbi()">Connect</button>
+
+                <div style="margin-top: 3%; margin-bottom: 5%;">
+                    <div class="accordion-list" id="abi_accordion">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-2">
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="/vendor/jquery/jquery-3.2.5.min.js"></script>
+<!--===============================================================================================-->
+<script src="/dist/main.bundle.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="https://malsup.github.io/jquery.blockUI.js"></script>
+<!--===============================================================================================-->
+
+</body>
+</html>
