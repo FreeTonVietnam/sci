@@ -33,8 +33,8 @@
                 </ul>
             </nav>
             <div class="nav header-social">
-                <a href="#"><i class="fa fa-lg fa-github" style="font-size: 24px"></i></a>
-                <a href="#"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
+                <a href="https://github.com/FreeTonVietnam/sci"><i class="fa fa-lg fa-github" style="font-size: 24px"></i></a>
+                <a href="https://t.me/freeton_sci"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
             </div>
         </div>
 
@@ -75,10 +75,9 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Passphrase</span>
                     </div>
-                    <input type="password" id="seed" class="form-control"/>
-                    <span class="symbol-input200" style="position: absolute; top: 5px; left: 97%">
-                                <a href="#"><i class="fa fa-fw fa-eye eye-password"></i></a>
-                    </span>
+                    <input class="form-control" list="seedList" id="seed" value="">
+                    <datalist id="seedList"></datalist>
+                    <span class="symbol-input200" style="position: absolute; top: 5px; left: 97%"><a href="#"><i class="fa fa-fw eye-password fa-eye"></i></a></span>
                 </div>
 
                 <button type="button" style="margin-top: 5%;" class="btn btn-secondary btn-sm btn-block" onclick="connectToAbi()">Connect</button>

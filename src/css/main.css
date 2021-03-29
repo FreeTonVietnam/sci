@@ -197,3 +197,7 @@ body {
 .symbol-input200 > a > i:hover {
     color: #343a40 !important;
 }
+
+input::-webkit-calendar-picker-indicator {
+    display: none;
+}

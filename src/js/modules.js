@@ -23,10 +23,12 @@ module.exports = {
      * @returns {*}
      */
     prepareRowForDrawAbi: (abiFunction, row) => {
-        row += `<li><a data-toggle="collapse" href="#${abiFunction.name}_accordion" class="collapsed"`
-        row += (!Object.keys(abiFunction.inputs).length) ? `onclick='callABIFunction("${abiFunction.name}")'>${abiFunction.name}</a>` : '>'
+        row += `<li><a data-toggle="collapse" href="#${abiFunction.name}_accordion" class="collapsed"</a>${abiFunction.name}`
+        row += `<p class="pull-right">`
+        row += (Object.keys(abiFunction.inputs).length) ? `<i class="fa fa-chevron-down icon-show"></i><i class="fa fa-chevron-up icon-close"></i>` :
+            `<button class="button-call-abi btn btn-sm btn-secondary" style="margin-left:0 !important; margin-top: -10px;" onclick='callABIFunction("${abiFunction.name}")'>Call</button>`
+        row += `</p></a>`
         if (Object.keys(abiFunction.inputs).length) {
-            row += `${abiFunction.name}<p class="pull-right"><i class="fa fa-chevron-down icon-show"></i><i class="fa fa-chevron-up icon-close"></i></p></a>`
             row += `<div id="${abiFunction.name}_accordion" class="collapse abi-func-content" data-parent=".accordion-list"><br/>`
             for (let val of Object.values(abiFunction.inputs)) {
                 row += `<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><span class="input-group-text">${val.name} (${val.type})</span></div>`
