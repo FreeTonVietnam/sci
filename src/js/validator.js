@@ -1,6 +1,6 @@
 'use strict';
 
-let modules = require('./modules');
+let modules = require('./modules/modules');
 
 /**
  * Check on exist prop name & type at inputs & outputs of ABI functions

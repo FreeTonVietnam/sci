@@ -63,5 +63,16 @@ module.exports = {
         (type === 'hide') ? $.blockUI({message: null, overlayCSS: {cursor: "default", opacity: 0.0}}) : $.unblockUI();
         (type === 'hide') ? $('#spinner').removeClass('d-none') : $('#spinner').addClass('d-none');
         $('#container').css('opacity', (type === 'show') ? 1 : 0.3);
+    },
+
+    /**
+     * Show alert modal
+     * @param type
+     * @param msg
+     */
+    alertModal: (type, msg) => {
+        $('#alertModalTitle').html(type);
+        $('#alertModalBody').html(msg);
+        $('#alertModal').modal('toggle');
     }
 }

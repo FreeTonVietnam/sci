@@ -1,7 +1,7 @@
 `use strict`;
 
-let modules = require('./modules');
-let en = require('./en');
+let modules = require('../modules/modules');
+let en = require('../consts/en_words');
 let separators = /[\s,]+/;
 let minSymbols = 3;
 
@@ -21,6 +21,9 @@ $('#abiFile').change(async _ => {
     $('#abiText').val(txt);
 })
 
+/**
+ * Seed phrase keyup
+ */
 $('#seed').keyup((el, row = '') => {
     $("#seedList").empty();
     let words = el.currentTarget.value.split(separators)

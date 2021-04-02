@@ -201,3 +201,23 @@ body {
 input::-webkit-calendar-picker-indicator {
     display: none;
 }
+
+#transactionsTable > thead > tr > td {
+    font-family: Open Sans !important;
+    font-weight: 300 !important;
+}
+
+#transactionsTable > tbody > tr > td {
+    font-family: Open Sans !important;
+    font-weight: 300 !important;
+}
+
+#transactionsTable {
+    border-collapse: separate;
+    border-spacing:0 10px;
+}
+
+.href-grey {
+    color: #5c6a70 !important;
+    list-style: none;
+}

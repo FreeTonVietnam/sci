@@ -5,13 +5,14 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/src/css/main.css">
     <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/src/css/pretty_checkbox.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/vendor/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
 </head>
 <body>
-
 <!--SPINNER-->
 <div class="spinner-border text-dark d-none" id="spinner"
      style="position: fixed; top: 50%; left: 50%; margin-top: -1.5rem; margin-left: -1.5rem; width: 3rem; height: 3rem;"
@@ -19,13 +20,12 @@
     <span class="sr-only">Loading...</span>
 </div>
 
-
 <div class="container-fluid" id="container">
     <div class="row">
         <div class="col-1">
 
         </div>
-<!--        LEFT MENU BLOCK-->
+<!--        LEFT MAIN BLOCK-->
         <div class="col-2 menu">
             <p class="pre-header">developed by</p>
             <h2 class="title-header"><a href="#">Free TON VN</a></h2>
@@ -40,13 +40,13 @@
                 <a href="https://t.me/freeton_sci"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
             </div>
         </div>
-
-<!--        MAIN CONTENT-->
-        <div class="col-6 content rounded">
+<!--        FIRST PAGE-->
+        <div class="col-6 content rounded" id="multisignFormOne" style="min-height: 0 !important;">
             <h2 class="content-header"></h2>
-            <p class="hello-text">Simple and safety way for access to Free TON smart-contracts. Just use contract address and ABI for  getting function list and call any methods. If you need an access to auth method fill passphrase.
+            <p class="hello-text">Safe and clear  access to multisig wallet on FreeTON.
+                Currently we are supporting following smart-contracts: <a href="https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/safemultisig" class="href-grey">SafeMultisig</a>,
+                <a href="https://github.com/tonlabs/ton-labs-contracts/tree/master/solidity/setcodemultisig" class="href-grey">SetcodeMultisig</a>.
                 We don't save or transmit your passphrase to our servers.</p><br/>
-
             <div class="input-forms">
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="rd_main" name="rd" class="custom-control-input" value="main.ton.dev" checked>
@@ -64,18 +64,7 @@
                     <input type="text" id="address" class="form-control"/>
                 </div>
 
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">*.abi.json</span>
-                    </div>
-                    <textarea class="form-control" id="abiText" rows="6"></textarea>
-                </div>
-
-                <label style="margin-top: 5px;" class="btn btn-sm btn-secondary pull-right">
-                    Upload ABI file <input type="file" id="abiFile" accept="*.json" hidden>
-                </label>
-
-                <div class="input-group input-group-sm mb-12 wrapper" style="margin-top: 45px !important;">
+                <div class="input-group input-group-sm mb-12 wrapper" style="margin-top: 15px !important;">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Passphrase</span>
                     </div>
@@ -84,45 +73,88 @@
                     <span class="symbol-input200" style="position: absolute; top: 5px; left: 97%"><a href="#"><i class="fa fa-fw eye-password fa-eye"></i></a></span>
                 </div>
 
-                <button type="button" style="margin-top: 5%;" class="btn btn-secondary btn-sm btn-block" onclick="connectToAbi()">Connect</button>
-
-<!--                ABI FUNCTIONS-->
-                <div style="margin-top: 3%; margin-bottom: 5%;">
-                    <div class="accordion-list" id="abi_accordion">
-                        <ul>
-
-                        </ul>
-                    </div>
-                </div>
+                <button type="button" style="margin-top: 7%; margin-bottom: 1%;" class="btn btn-secondary btn-sm btn-block" onclick="connectToMultisig()">Connect</button>
 
             </div>
         </div>
+<!--        SECOND PAGE-->
+        <div class="col-6 content rounded d-none" id="multisignFormTwo" style="min-height: 0 !important;">
+            <span class="row" style="margin-top: 2%;">
+            <span style="font-size: 18px;" class="col-4">Address</span><span class="col-8" id="curAddress"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">Status</span><span class="col-8" id="status"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">Balance</span><span class="col-8" id="balance"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">Count of owners</span><span class="col-8" id="countOwners"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">You are custodian?</span><span class="col-8" id="isCustodian"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">Contract type</span><span class="col-8" id="contractName"></span>
+            </span><hr/>
+            <p class="text-center">
+                <button type="button" id="createNewTransaction" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#transactionModal">Create new transaction</button>
+                &nbsp;|&nbsp;
+                <button type="button" class="btn btn-secondary btn-sm" onclick="updateTransactionsTable(true)">Update transactions</button>
+            </p>
+            <table class="table table-sm" id="transactionsTable">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>To address</td>
+                    <td>Amount</td>
+                    <td>Confirmed</td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
+        </div>
         <div class="col-2">
 
         </div>
     </div>
 </div>
 
-<!--SUCCESS MODAL-->
-<div class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<!--TRANSACTION MODAL-->
+<div class="modal" id="transactionModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title">Create new transaction</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <span id="modalBody"></span>
+                <div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Address</span>
+                    </div>
+                    <input type="text" id="modalAddress" class="form-control"/>
+                </div>
+                <div class="input-group input-group-sm mb-3" style="margin-top: 15px !important; margin-left: 0 !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Amount</span>
+                    </div>
+                    <input type="number" id="modalAmount" class="form-control"/>
+                </div>
+                <div class="pretty p-switch p-fill float-right">
+                    <input type="checkbox" id="modalBounce" checked/>
+                    <div class="state">
+                        <label>Bounce</label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="createNewMultisignTransaction()">Create</button>
             </div>
         </div>
     </div>
 </div>
-
 
 <!--ALERT MODAL-->
 <div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
@@ -143,6 +175,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!--===============================================================================================-->
 <script src="/vendor/jquery/jquery-3.2.5.min.js"></script>
