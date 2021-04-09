@@ -1,5 +1,7 @@
 'use strict';
 
+let bigInt = require("big-integer");
+
 module.exports = {
 
     /**
@@ -50,7 +52,7 @@ module.exports = {
         for (let [key, val] of Object.entries($(`input[name^="${functionName}_"]`))) {
             if ((key === 'length') || (key === 'prevObject')) continue;
             data[(val.name).split('_')[1]] = (val.value === 'true') ? true : (val.value === 'false') ? false :
-                ((!isNaN(Number(val.value))) && (val.value.trim() !== '')) ? parseFloat(val.value) : val.value;
+                ((!isNaN(Number(val.value))) && (val.value.trim() !== '')) ? ((Number.MAX_SAFE_INTEGER > parseFloat(val.value)) ? parseFloat(val.value) : bigInt(val.value)) : val.value;
         }
         return data;
     },

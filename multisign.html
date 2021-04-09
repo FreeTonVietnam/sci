@@ -32,12 +32,12 @@
             <nav class="nav header-nav">
                 <ul>
                     <li><a href="/">SCI</a></li>
-                    <li><a href="/multisign.html">Multisig wallet</a></li>
+                    <li><a href="/multisign.html" style="text-decoration: underline !important;">Multisig wallet</a></li>
                 </ul>
             </nav>
             <div class="nav header-social">
-                <a href="https://github.com/FreeTonVietnam/sci"><i class="fa fa-lg fa-github" style="font-size: 24px"></i></a>
-                <a href="https://t.me/freeton_sci"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
+                <a href="https://github.com/FreeTonVietnam/sci" target="_blank"><i class="fa fa-lg fa-github" style="font-size: 24px"></i></a>
+                <a href="https://t.me/freeton_sci" target="_blank"><i class="fa fa-lg fa-telegram" style="font-size: 22px; margin-top: 2px;"></i></a>
             </div>
         </div>
 <!--        FIRST PAGE-->
@@ -77,7 +77,7 @@
 
             </div>
         </div>
-<!--        SECOND PAGE-->
+<!--        TRANSACTIONS PAGE-->
         <div class="col-6 content rounded d-none" id="multisignFormTwo" style="min-height: 0 !important;">
             <span class="row" style="margin-top: 2%;">
             <span style="font-size: 18px;" class="col-4">Address</span><span class="col-8" id="curAddress"></span>
@@ -96,8 +96,10 @@
                 <button type="button" id="createNewTransaction" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#transactionModal">Create new transaction</button>
                 &nbsp;|&nbsp;
                 <button type="button" class="btn btn-secondary btn-sm" onclick="updateTransactionsTable(true)">Update transactions</button>
+                |&nbsp;
+                <button type="button" id="custodiansButton" class="btn btn-secondary btn-sm d-none" onclick="drawCustodiansPage()">Custodians</button>
             </p>
-            <table class="table table-sm" id="transactionsTable">
+            <table class="table table-sm grey-table" id="transactionsTable">
                 <thead>
                 <tr>
                     <td>#</td>
@@ -112,11 +114,104 @@
                 </tbody>
             </table>
         </div>
+
+
+        <!--        OWNERS PAGE-->
+        <div class="col-6 content rounded d-none" id="ownersForm" style="min-height: 0 !important;">
+            <span class="row" style="margin-top: 2%;">
+            <span style="font-size: 18px;" class="col-4">Address</span><span class="col-8" id="ownerAddress"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 18px;" class="col-4">Custodians</span><span class="col-8" id="ownersList">
+            <ol style="padding: 0">
+
+            </ol>
+            </span>
+            </span><hr/>
+            <p class="text-center">
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#ownersModal">Change custodians</button>
+                &nbsp;|&nbsp;
+                <button type="button" class="btn btn-secondary btn-sm" onclick="updateOwnersRequests(true)">Update list</button>
+                |&nbsp;
+                <button type="button" class="btn btn-secondary btn-sm" onclick="drawTransactionsPage(true)">Transactions page</button>
+            </p>
+            <table class="table table-sm grey-table" id="ownersTable">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Creator</td>
+                    <td>Signs</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
         <div class="col-2">
 
         </div>
     </div>
 </div>
+
+
+<!--OWNERS MODAL-->
+<div class="modal" id="ownersModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change custodians</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="modalPubKeys">
+
+                </span>
+                <button class="btn btn-secondary btn-sm float-right" style="margin-top: 10px !important;" onclick="addNewPubKey()">Add</button><br/><br/>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">reqConfirms</span>
+                    </div>
+                    <input type="number" id="modalReqConfirms" class="form-control"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="createNewUpdateOwners()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--UPDATE REQUEST MODAL-->
+<div class="modal" id="requestModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New custodians</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span class="row" style="margin-top: 2%;">
+            <span style="font-size: 14px;" class="col-4">Custodians</span><span class="col-8" id="ownersRequestModal" style="font-size: 14px;"></span>
+            </span><hr/><span class="row">
+            <span style="font-size: 14px;" class="col-4">reqConfirms</span><span class="col-8" id="reqConfirmsRequestModal" style="font-size: 14px;"></span>
+            </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--TRANSACTION MODAL-->
 <div class="modal" id="transactionModal" tabindex="-1">

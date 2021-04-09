@@ -142,59 +142,16 @@ module.exports = {
     },
 
     /**
-     * Get list of custodians
+     * Call run tvm function
      * @param abi
      * @param address
      * @param boc
+     * @param functionName
+     * @param returnValue
      * @returns {Promise<*>}
      */
-    async getCustodians(abi, address, boc) {
-        let getCustodiansMessage = await module.exports.encodeGetMessage(abi, address, 'getCustodians');
-        return (await module.exports.runTvm(abi, boc, getCustodiansMessage.message)).custodians;
+    async callRunTvm(abi, address, boc, functionName, returnValue) {
+        let message = await module.exports.encodeGetMessage(abi, address, functionName);
+        return (await module.exports.runTvm(abi, boc, message.message))[returnValue];
     },
-
-    /**
-     * Get list of transactions
-     * @param abi
-     * @param address
-     * @param boc
-     * @returns {Promise<*>}
-     */
-    async getTransactions(abi, address, boc) {
-        const getCustodiansMessage = await module.exports.encodeGetMessage(abi, address, 'getTransactions');
-        return (await module.exports.runTvm(abi, boc, getCustodiansMessage.message)).transactions;
-    },
-
-    /**
-     * Submit transaction
-     * @param bounce
-     * @param address
-     * @param abi
-     * @param phrase
-     * @param dest
-     * @param value
-     * @returns {Promise<*>}
-     */
-    async submitTransaction(bounce, address, abi, phrase, dest, value) {
-        let input = {
-            dest,
-            value: value,
-            bounce: bounce,
-            allBalance: false,
-            payload: ""
-        };
-        return (await module.exports.processMessage(address, abi, input, 'submitTransaction', phrase))
-    },
-
-    /**
-     * Confirm transactions
-     * @param address
-     * @param abi
-     * @param id
-     * @param phrase
-     * @returns {Promise<void>}
-     */
-    async confirmTransaction(address, abi, id, phrase) {
-        return (await module.exports.processMessage(address, abi, {transactionId: id}, 'confirmTransaction', phrase))
-    }
 }

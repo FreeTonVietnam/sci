@@ -44,7 +44,7 @@ async function callABIFunction(functionName) {
         let data = modules.getABIFunctionParams(functionName);
         let address = $("#address").val().trim();
         let res = (!Object.keys(data).length) ? await TON.callGetMethod(abi, address, await TON.getBoc(address), functionName) :
-            await TON.processMessage(address, abi, data, functionName, $("#seed").val().trim());
+            await TON.processMessage(address, abi, data, functionName, $("#seed").val().split('—').join(' '));
         modules.showHideSpinner('show')
         $('#modalBody').html(JSON.stringify(res));
         $('#mainModal').modal('show');

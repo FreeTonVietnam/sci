@@ -202,22 +202,27 @@ input::-webkit-calendar-picker-indicator {
     display: none;
 }
 
-#transactionsTable > thead > tr > td {
+.grey-table > thead > tr > td {
     font-family: Open Sans !important;
     font-weight: 300 !important;
 }
 
-#transactionsTable > tbody > tr > td {
+.grey-table > tbody > tr > td {
     font-family: Open Sans !important;
     font-weight: 300 !important;
 }
 
-#transactionsTable {
+.grey-table {
     border-collapse: separate;
     border-spacing:0 10px;
 }
 
 .href-grey {
     color: #5c6a70 !important;
-    list-style: none;
+    text-decoration: underline !important;
+    outline: none !important;
+}
+
+.href-grey:hover, .href-grey:active {
+    color: #343a40 !important;
 }
