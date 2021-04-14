@@ -11,13 +11,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^5.25.0",
-    "webpack-cli": "^4.5.0"
   },
   "dependencies": {
     "@tonclient/core": "1.9.0",
     "@tonclient/lib-web": "1.9.0",
     "big-integer": "^1.6.48",
-    "hex2dec": "^1.1.2"
+    "hex2dec": "^1.1.2",
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0"
   }
 }
