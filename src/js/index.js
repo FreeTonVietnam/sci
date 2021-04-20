@@ -5,6 +5,18 @@ let sci = require('./pages/sci');
 
 require('./listeners/listeners');
 
+$('#abiClickEl').click(function() {
+    $('#abiFile').click();
+});
+
+function updateCollapse(name) {
+    if ($(`#collapse_${name}.active`).length) {
+        $(`#collapse_${name}`).removeClass('active')
+    } else {
+        $(`#collapse_${name}`).addClass('active')
+    }
+}
+
 // SCI
 window.connectToAbi = sci.connectToAbi;
 window.callABIFunction = sci.callABIFunction;
@@ -22,3 +34,5 @@ window.deployOrderRequest = multisig.deployOrderRequest;
 window.ownersRequestsInfo = multisig.ownersRequestsInfo;
 window.updateOwnersRequests = multisig.updateOwnersRequests;
 window.drawTransactionsPage = multisig.drawTransactionsPage;
+
+window.updateCollapse = updateCollapse;

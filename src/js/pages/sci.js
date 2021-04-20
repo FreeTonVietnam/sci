@@ -22,12 +22,12 @@ async function connectToAbi() {
  * @returns {Promise<void>}
  */
 async function drawABIFunctions(abi, row = "") {
-    $("#abi_accordion > ul").empty();
+    $(".info-block").empty();
     for (let abiFunction of Object.values(abi.functions)) {
         if (abiFunction.name === 'constructor') continue;
         row = modules.prepareRowForDrawAbi(abiFunction, row)
     }
-    $("#abi_accordion > ul").append(row);
+    $(".info-block").append(row);
 }
 
 
@@ -38,7 +38,7 @@ async function drawABIFunctions(abi, row = "") {
  */
 async function callABIFunction(functionName) {
     try {
-        await TON.changeClient($('input[name="rd"]:checked').val());
+        // await TON.changeClient($('input[name="rd"]:checked').val());
         modules.showHideSpinner('hide')
         let abi = JSON.parse(await modules.getAbi());
         let data = modules.getABIFunctionParams(functionName);

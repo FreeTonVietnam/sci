@@ -25,20 +25,22 @@ module.exports = {
      * @returns {*}
      */
     prepareRowForDrawAbi: (abiFunction, row) => {
-        row += `<li><a data-toggle="collapse" href="#${abiFunction.name}_accordion" class="collapsed"</a>${abiFunction.name}`
-        row += `<p class="pull-right">`
-        row += (Object.keys(abiFunction.inputs).length) ? `<i class="fa fa-chevron-down icon-show"></i><i class="fa fa-chevron-up icon-close"></i>` :
-            `<button class="button-call-abi btn btn-sm btn-secondary" style="margin-left:0 !important; margin-top: -10px;" onclick='callABIFunction("${abiFunction.name}")'>Call</button>`
-        row += `</p></a>`
+        let startClass = (Object.keys(abiFunction.inputs).length) ? `<div class="info-section info-section--collapse" id="collapse_${abiFunction.name}">` : `<div class="info-section info-section--call">`
+        row += `${startClass}<div class="info-head" onclick='updateCollapse("${abiFunction.name}")'><div class="info-ttl">${abiFunction.name}</div>`
         if (Object.keys(abiFunction.inputs).length) {
-            row += `<div id="${abiFunction.name}_accordion" class="collapse abi-func-content" data-parent=".accordion-list"><br/>`
+            row += `</div><div class="info-body">`;
             for (let val of Object.values(abiFunction.inputs)) {
-                row += `<div class="input-group input-group-sm mb-3"><div class="input-group-prepend"><span class="input-group-text">${val.name} (${val.type})</span></div>`
-                row += `<input type="text" name="${abiFunction.name}_${val.name}" class="form-control"/></div>`
+                row += `<div class="ui-form-field"><label class="ui-input"><span class="ui-input-inner">`;
+                row += `<span class="ui-input-text">${val.name} (${val.type})</span>`
+                row += `<input type="text" name="${abiFunction.name}_${val.name}"/>`;
+                row += `</span></label></div>`
             }
-            row += `<button class="button-call-abi btn btn-sm btn-secondary" onclick='callABIFunction("${abiFunction.name}")'>Call</button></div>`
+            row += `<button class="info-call-btn float-right" onclick='callABIFunction("${abiFunction.name}")'>Call</button><br/>`
+        } else {
+            row += `<div class="info-call">`
+            row += `<button class="info-call-btn" onclick='callABIFunction("${abiFunction.name}")'>Call</button></div>`
         }
-        row += `</li>`
+        row += `</div></div>`
         return row;
     },
 
@@ -64,7 +66,7 @@ module.exports = {
     showHideSpinner: (type) => {
         (type === 'hide') ? $.blockUI({message: null, overlayCSS: {cursor: "default", opacity: 0.0}}) : $.unblockUI();
         (type === 'hide') ? $('#spinner').removeClass('d-none') : $('#spinner').addClass('d-none');
-        $('#container').css('opacity', (type === 'show') ? 1 : 0.3);
+        $('.page').css('opacity', (type === 'show') ? 1 : 0.4);
     },
 
     /**
