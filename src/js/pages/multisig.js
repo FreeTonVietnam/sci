@@ -113,7 +113,7 @@ async function updateTransactionsTable(type) {
         <td>${el.dest}</td>
         <td>${(parseFloat(el.value) / 1000000000).toFixed(3)}</td>
         <td>${el.signsReceived} / ${el.signsRequired}</td>
-        <td><a href="#" class="btn btn-secondary btn-sm ${((el.confirmed) || (!multisigData.isCustodian)) ? 'disabled' : ''}" onclick='confirmTransaction(${JSON.stringify(el)}, "transaction")'>Confirm</a></td>
+        <td><a href="#" class="btn confirm-tr btn-secondary btn-sm ${((el.confirmed) || (!multisigData.isCustodian)) ? 'disabled' : ''}" onclick='confirmTransaction(${JSON.stringify(el)}, "transaction")'>Confirm</a></td>
         </tr>`
     }).join('')
     $('#transactionsTable > tbody').append(tableContent);
