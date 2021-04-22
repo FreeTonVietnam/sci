@@ -17,6 +17,7 @@ async function connectToMultisig() {
     if (!validator.addressValidate()) return modules.alertModal('Error', 'Incorrect address');
     try {
         modules.showHideSpinner('hide')
+        await TON.changeClient($('input[name="rd"]:checked').val());
         let accData = await TON.getAccountData($("#address").val());
         if (!accData) throw new Error('Incorrect address');
         let contractName = Object.keys(supportedContracts).find(key => supportedContracts[key] === accData.parsed.code_hash);

@@ -453,7 +453,7 @@ html.no-touch .ui-btn--grey:hover {
 
 .title {
 	width:100%;
-	max-width:600px;
+	/*max-width:600px;*/
 	margin:0 auto 30px auto;
 	position:relative;
 	text-align:center;
@@ -480,19 +480,19 @@ html.no-touch .ui-btn--grey:hover {
 }
 
 .form-section {
-	-webkit-box-flex:1;
-	-ms-flex-positive:1;
-	flex-grow:1;
-	display:-webkit-box;
-	display:-ms-flexbox;
-	display:flex;
-	-webkit-box-orient:vertical;
-	-webkit-box-direction:normal;
-	-ms-flex-direction:column;
-	flex-direction:column;
-	-webkit-box-pack:center;
-	-ms-flex-pack:center;
-	justify-content:center;
+	/*-webkit-box-flex:1;*/
+	/*-ms-flex-positive:1;*/
+	/*flex-grow:1;*/
+	/*display:-webkit-box;*/
+	/*display:-ms-flexbox;*/
+	/*display:flex;*/
+	/*-webkit-box-orient:vertical;*/
+	/*-webkit-box-direction:normal;*/
+	/*-ms-flex-direction:column;*/
+	/*flex-direction:column;*/
+	/*-webkit-box-pack:center;*/
+	/*-ms-flex-pack:center;*/
+	/*justify-content:center;*/
 	padding:30px;
 }
 
@@ -969,6 +969,14 @@ html.no-touch .social:hover {
 
 @media only screen and (max-width: 400px) {
 
+	.info-table td {
+		padding: 3px !important;
+	}
+
+	.info-table td:first-child {
+		width: 20px !important;
+	}
+
 	.confirm-tr {
 		padding: 0 0 !important;
 		font-size: 8px !important;
@@ -980,4 +988,10 @@ html.no-touch .social:hover {
 
 }
 
+.custom-control-input:checked~.custom-control-label.grey::before {
+	background-color: #1b3262;
+	border-color: #1b3262 !important;
+	-webkit-box-shadow: inset 0 1px 1px #1b3262, 0 0 8px #101d39 !important;
+	box-shadow: inset 0 1px 1px #1b3262, #101d39 !important;
+}
 /*** СТРАНИЦА - конец ***/

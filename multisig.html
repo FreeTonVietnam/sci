@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
-	<title>Free TON VN</title>
+	<title>Multisig wallet interface</title>
 	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/src/css/style.css?v=1" />
 	<script>
@@ -25,46 +25,54 @@
 </div>
 
 <body class="body">
-	<div class="page">
-		<div class="page-content">
-			<div class="section form-section">
-				<div class="container">
-					<div class="title">
-						<div class="title-head">
-							by Free TON Vietnam
+<div class="page">
+	<div class="page-content">
+		<div class="section form-section">
+			<div class="container">
+				<div class="title">
+					<div class="title-head">
+						Multisig wallet interface
+					</div>
+					<div class="title-sub">
+						developed by Free TON Vietnam
+					</div>
+				</div>
+				<div class="form-tabs-container">
+					<div class="form-tabs">
+						<div class="form-tab">
+							<a class="form-tab-link" href="/">SCI</a>
 						</div>
-						<div class="title-sub">
-							Multisig wallet interface
+						<div class="form-tab active">
+							<a class="form-tab-link">Multisig wallet</a>
 						</div>
 					</div>
-					<div class="form-tabs-container">
-						<div class="form-tabs">
-							<div class="form-tab">
-								<a class="form-tab-link" href="/">SCI</a>
+				</div>
+				<div class="forms-container">
+					<form class="form active" id="multisigMainForm">
+						<div class="form-body">
+							<div class="form-text">
+								Safe and clear access to multisig wallet on Free TON. Currently we are supporting following smart-contracts: SafeMultisig, SetcodeMultisig, Setcode Multisig Wallet 24h. We don't save or transmit your passphrase to our servers.
 							</div>
-							<div class="form-tab active">
-								<a class="form-tab-link">Multisig wallet</a>
-							</div>
-						</div>
-					</div>
-					<div class="forms-container">
-						<form class="form active" id="multisigMainForm">
-							<div class="form-body">
-								<div class="form-text">
-									Safe and clear access to multisig wallet on Free TON. Currently we are supporting following smart-contracts: SafeMultisig, SetcodeMultisig, Setcode Multisig Wallet 24h. We don't save or transmit your passphrase to our servers.
+							<div class="ui-form-field">
+								<div class="custom-control custom-radio custom-control-inline" style="margin-left: 1%;">
+									<input type="radio" id="rd_main" name="rd" class="custom-control-input" value="main.ton.dev" checked>
+									<label class="custom-control-label grey form-text" for="rd_main">Main.ton.dev</label>
 								</div>
-								<div class="ui-form-field">
-									<label class="ui-input">
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="rn_net" name="rd" class="custom-control-input" value="net.ton.dev">
+									<label class="custom-control-label grey form-text" for="rn_net">Net.ton.dev</label>
+								</div><br/><br/>
+								<label class="ui-input">
 										<span class="ui-input-inner">
 											<span class="ui-input-text">
 												Address
 											</span>
 											<input type="text" id="address"/>
 										</span>
-									</label>
-								</div>
-								<div class="ui-form-field">
-									<label class="ui-input">
+								</label>
+							</div>
+							<div class="ui-form-field">
+								<label class="ui-input">
 										<span class="ui-input-inner">
 											<span class="ui-input-text">
 												Passphrase
@@ -75,360 +83,360 @@
 												<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-opened-eye"></use></svg>
 											</span>
 										</span>
-									</label>
+								</label>
+							</div>
+						</div>
+						<div class="form-bot">
+							<div class="form-btns">
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark" type="button" onclick="connectToMultisig()">
+										<span class="ui-btn-text">Submit</span>
+									</button>
 								</div>
-							</div>
-							<div class="form-bot">
-								<div class="form-btns">
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark" type="button" onclick="connectToMultisig()">
-											<span class="ui-btn-text">Submit</span>
-										</button>
-									</div>
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--grey" type="reset">
-											<span class="ui-btn-text">Reset</span>
-										</button>
-									</div>
-								</div>
-							</div>
-						</form>
-						<div class="form" id="multisigTransactionForm">
-							<div class="form-body">
-								<table class="form-table">
-									<tbody>
-									<tr>
-										<td>
-											Address
-										</td>
-										<td class="form-table-wrap" id="curAddress">
-											address val
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Status
-										</td>
-										<td id="status">
-
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Balance
-										</td>
-										<td id="balance">
-
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Count of owners
-										</td>
-										<td id="countOwners">
-
-										</td>
-									</tr>
-									<tr>
-										<td>
-											You are custodian?
-										</td>
-										<td id="isCustodian">
-
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Contact type
-										</td>
-										<td id="contractName">
-
-										</td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="form-bot">
-								<div class="form-btns">
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark disabled" type="button" id="transactionModalTriggerParent">
-											<span class="ui-btn-text" data-toggle="modal" id="transactionModalTrigger" data-target="#transactionModal">New Transaction</span>
-										</button>
-									</div>
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark" type="button" onclick="updateTransactionsTable(true)">
-											<span class="ui-btn-text">Update Transaction</span>
-										</button>
-									</div>
-									<div class="form-btn">
-										<button id="custodiansPageTrigger" class="ui-btn ui-btn--dark disabled" type="button" onclick="drawCustodiansPage()">
-											<span class="ui-btn-text">Custodians</span>
-										</button>
-									</div>
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--grey" type="reset">
+										<span class="ui-btn-text">Reset</span>
+									</button>
 								</div>
 							</div>
 						</div>
-
-						<div class="form" id="multisigCustodiansForm">
-							<div class="form-body">
-								<table class="form-table">
-									<tbody>
-									<tr>
-										<td>
-											Address
-										</td>
-										<td class="form-table-wrap" id="ownerAddress">
-											address val
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Custodians
-										</td>
-										<td id="ownersList">
-											<ol></ol>
-										</td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="form-bot">
-								<div class="form-btns">
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark disabled" type="button" id="custodiansModalTriggerParent">
-											<span class="ui-btn-text" data-toggle="modal" data-target="#ownersModal">Change custodians</span>
-										</button>
-									</div>
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark" type="button" onclick="updateOwnersRequests(true)">
-											<span class="ui-btn-text">Update list</span>
-										</button>
-									</div>
-									<div class="form-btn">
-										<button class="ui-btn ui-btn--dark" type="button" onclick="drawTransactionsPage(true)">
-											<span class="ui-btn-text">Transactions page</span>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="info-container d-none" id="transactionsTableContent">
-						<div class="info-block">
-							<table class="info-table" id="transactionsTable">
-								<thead>
+					</form>
+					<div class="form" id="multisigTransactionForm">
+						<div class="form-body">
+							<table class="form-table">
+								<tbody>
 								<tr>
-									<td style="width:10%">
-										#
+									<td>
+										Address
 									</td>
-									<td style="width:70%">
-										To address
+									<td class="form-table-wrap" id="curAddress">
+										address val
 									</td>
-									<td style="width:10%">
-										Amount
+								</tr>
+								<tr>
+									<td>
+										Status
 									</td>
-									<td style="width:5%">
-										Confirmed
-									</td>
-									<td style="width:5%">
+									<td id="status">
 
 									</td>
 								</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div class="info-container d-none" id="ownersTableContent">
-						<div class="info-block">
-							<table class="info-table" id="ownersTable">
-								<thead>
 								<tr>
 									<td>
-										#
+										Balance
 									</td>
-									<td>
-										Creator
-									</td>
-									<td>
-										Signs
-									</td>
-									<td>
-
-									</td>
-									<td>
+									<td id="balance">
 
 									</td>
 								</tr>
-								</thead>
-								<tbody>
+								<tr>
+									<td>
+										Count of owners
+									</td>
+									<td id="countOwners">
 
+									</td>
+								</tr>
+								<tr>
+									<td>
+										You are custodian?
+									</td>
+									<td id="isCustodian">
+
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Contact type
+									</td>
+									<td id="contractName">
+
+									</td>
+								</tr>
 								</tbody>
 							</table>
+						</div>
+						<div class="form-bot">
+							<div class="form-btns">
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark disabled" type="button" id="transactionModalTriggerParent">
+										<span class="ui-btn-text" data-toggle="modal" id="transactionModalTrigger" data-target="#transactionModal">New Transaction</span>
+									</button>
+								</div>
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark" type="button" onclick="updateTransactionsTable(true)">
+										<span class="ui-btn-text">Update Transaction</span>
+									</button>
+								</div>
+								<div class="form-btn">
+									<button id="custodiansPageTrigger" class="ui-btn ui-btn--dark disabled" type="button" onclick="drawCustodiansPage()">
+										<span class="ui-btn-text">Custodians</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form" id="multisigCustodiansForm">
+						<div class="form-body">
+							<table class="form-table">
+								<tbody>
+								<tr>
+									<td>
+										Address
+									</td>
+									<td class="form-table-wrap" id="ownerAddress">
+										address val
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Custodians
+									</td>
+									<td id="ownersList">
+										<ol></ol>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="form-bot">
+							<div class="form-btns">
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark disabled" type="button" id="custodiansModalTriggerParent">
+										<span class="ui-btn-text" data-toggle="modal" data-target="#ownersModal">Change custodians</span>
+									</button>
+								</div>
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark" type="button" onclick="updateOwnersRequests(true)">
+										<span class="ui-btn-text">Update list</span>
+									</button>
+								</div>
+								<div class="form-btn">
+									<button class="ui-btn ui-btn--dark" type="button" onclick="drawTransactionsPage(true)">
+										<span class="ui-btn-text">Transactions page</span>
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 
 				</div>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="socials">
-				<div class="socials-item">
-					<a class="social" href="javascript:void(0);" target="_blank">
-						<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-github"></use></svg>
-					</a>
+
+
+				<div class="info-container d-none" id="transactionsTableContent">
+					<div class="info-block">
+						<table class="info-table" id="transactionsTable">
+							<thead>
+							<tr>
+								<td style="width:10%">
+									#
+								</td>
+								<td style="width:70%">
+									To address
+								</td>
+								<td style="width:10%">
+									Amount
+								</td>
+								<td style="width:5%">
+									Confirmed
+								</td>
+								<td style="width:5%">
+
+								</td>
+							</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div class="socials-item">
-					<a class="social" href="javascript:void(0);" target="_blank">
-						<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-telegram"></use></svg>
-					</a>
+
+				<div class="info-container d-none" id="ownersTableContent">
+					<div class="info-block">
+						<table class="info-table" id="ownersTable">
+							<thead>
+							<tr>
+								<td>
+									#
+								</td>
+								<td>
+									Creator
+								</td>
+								<td>
+									Signs
+								</td>
+								<td>
+
+								</td>
+								<td>
+
+								</td>
+							</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
+	<div class="footer">
+		<div class="socials">
+			<div class="socials-item">
+				<a class="social" href="https://github.com/FreeTonVietnam/sci" target="_blank">
+					<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-github"></use></svg>
+				</a>
+			</div>
+			<div class="socials-item">
+				<a class="social" href="https://t.me/freeton_sci" target="_blank">
+					<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-telegram"></use></svg>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-	<!--ABI FILE INPUT-->
-	<input type="file" id="abiFile" accept="*.json" hidden>
+<!--ABI FILE INPUT-->
+<input type="file" id="abiFile" accept="*.json" hidden>
 
-	<!--OWNERS MODAL-->
-	<div class="modal" id="ownersModal" tabindex="-1">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Change custodians</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
+<!--OWNERS MODAL-->
+<div class="modal" id="ownersModal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change custodians</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
                 <span id="modalPubKeys">
 
                 </span>
-					<button class="btn btn-secondary btn-sm float-right" style="margin-top: 10px !important;" onclick="addNewPubKey()">Add</button><br/><br/>
+				<button class="btn btn-secondary btn-sm float-right" style="margin-top: 10px !important;" onclick="addNewPubKey()">Add</button><br/><br/>
 
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">reqConfirms</span>
-						</div>
-						<input type="number" id="modalReqConfirms" class="form-control"/>
+				<div class="input-group input-group-sm mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">reqConfirms</span>
 					</div>
+					<input type="number" id="modalReqConfirms" class="form-control"/>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-secondary btn-sm" onclick="createNewUpdateOwners()">Create</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary btn-sm" onclick="createNewUpdateOwners()">Create</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!--UPDATE REQUEST MODAL-->
-	<div class="modal" id="requestModal" tabindex="-1">
-		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">New custodians</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
+<!--UPDATE REQUEST MODAL-->
+<div class="modal" id="requestModal" tabindex="-1">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">New custodians</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
                 <span class="row" style="margin-top: 2%;">
             <span style="font-size: 14px;" class="col-4">Custodians</span><span class="col-8" id="ownersRequestModal" style="font-size: 14px;"></span>
             </span><hr/><span class="row">
             <span style="font-size: 14px;" class="col-4">reqConfirms</span><span class="col-8" id="reqConfirmsRequestModal" style="font-size: 14px;"></span>
             </span>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<!--TRANSACTION MODAL-->
-	<div class="modal" id="transactionModal" tabindex="-1">
-		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Create new transaction</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
-						<div class="input-group-prepend">
-							<span class="input-group-text">Address</span>
-						</div>
-						<input type="text" id="modalAddress" class="form-control"/>
+<!--TRANSACTION MODAL-->
+<div class="modal" id="transactionModal" tabindex="-1">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Create new transaction</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Address</span>
 					</div>
-					<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important; margin-left: 0 !important;">
-						<div class="input-group-prepend">
-							<span class="input-group-text">Amount</span>
-						</div>
-						<input type="number" id="modalAmount" class="form-control"/>
+					<input type="text" id="modalAddress" class="form-control"/>
+				</div>
+				<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important; margin-left: 0 !important;">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Amount</span>
 					</div>
+					<input type="number" id="modalAmount" class="form-control"/>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-secondary btn-sm" onclick="createNewMultisignTransaction()">Create</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary btn-sm" onclick="createNewMultisignTransaction()">Create</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!--ALERT MODAL-->
-	<div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="alertModalTitle"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" id="alertModalBody">
+<!--ALERT MODAL-->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="alertModalTitle"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="alertModalBody">
 
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-sprite">
-		<symbol id="icon-opened-eye" viewBox="0 0 20 20">
-			<path d="M.2 10a11 11 0 0 1 19.6 0A11 11 0 0 1 .2 10zm9.8 4a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-		</symbol>
-		<symbol id="icon-closed-eye" viewBox="0 0 20 20">
-			<path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-2.76 2.75C2.06 12.79.96 11.49.2 10a11 11 0 0 1 12.6-5.64zm3.8 1.85c1.33 1 2.43 2.3 3.2 3.79a11 11 0 0 1-12.62 5.64l1.77-1.78a4 4 0 0 0 4.9-4.9l2.76-2.75zm-.25-3.99l1.42 1.42L3.64 17.78l-1.42-1.42L16.36 2.22z"/>
-		</symbol>
-		<symbol id="icon-upload" viewBox="0 0 400 400">
-			<path d="M39.8,400c0-133.3,0-266.3,0-399.9c1.9,0,3.6,0,5.3,0c66.2,0,132.3,0,198.5-0.1c3.2,0,5.5,0.9,7.8,3.2 c35.1,35.2,70.3,70.4,105.5,105.5c2.4,2.4,3.3,4.8,3.3,8.2c-0.1,92.6-0.1,185.2-0.1,277.7c0,1.7,0,3.4,0,5.4 C253.2,400,146.8,400,39.8,400z M220,320.2c0-30.5,0-60.5,0-91.9c9.3,9.2,17.6,17.3,25.7,25.2c9.3-9.2,18.6-18.4,27.1-26.8 c-24.4-24.5-48.9-49.2-73.4-73.9c-24.2,24.4-48.6,49-72.4,72.9c9.1,9.1,18.4,18.4,28.7,28.7c7.7-7.7,15.9-15.9,24.4-24.3 c0,30,0,60.1,0,90.2C193.5,320.2,206.2,320.2,220,320.2z M260.1,69.7c0,9.9,0,19.9,0,30c10.2,0,20.2,0,30,0 C280.1,89.7,270.2,79.7,260.1,69.7z"/>
-		</symbol>
-		<symbol id="icon-github" viewBox="0 0 40 40">
-			<path d="M17.1,33.1c-0.1-0.1-0.1-0.3-0.1-0.4c0-0.8,0-1.6,0-2.4c0-0.3-0.1-0.3-0.4-0.3c-1.6,0.3-3.1,0.1-4.4-1.1 c-0.3-0.3-0.6-0.7-0.8-1.1c-0.5-0.7-0.9-1.5-1.4-2.2c-0.2-0.3-0.5-0.5-0.7-0.7c-0.1-0.1-0.2-0.3-0.3-0.4c0.2-0.1,0.3-0.1,0.5-0.2 c1,0,1.8,0.4,2.4,1.3c0.3,0.5,0.6,0.9,1,1.3c1.1,1,2.4,1.2,3.7,0.8c0.1,0,0.3-0.2,0.3-0.3c0.1-0.4,0.1-0.8,0.2-1.1 c0.1-0.4,0.3-0.7,0.5-1c-0.5-0.1-1.1-0.2-1.6-0.4c-1.6-0.5-2.9-1.3-3.8-2.6c-0.5-0.8-0.8-1.7-0.9-2.6c-0.1-1.5,0-2.9,0.3-4.4 c0.1-0.6,0.4-1.2,0.9-1.7c0.3-0.3,0.3-0.5,0.2-0.9c-0.4-1.1-0.3-2.1,0.1-3.2C12.9,9,13,8.9,13.3,9c1,0.3,1.8,1,2.4,1.8 c0.1,0.2,0.3,0.4,0.4,0.5c0.8-0.6,1.8-0.7,2.7-0.7c1.4-0.1,2.8-0.1,4.2,0.2c0.3,0.1,0.6,0.2,0.8,0.3c0.2,0.1,0.3,0.1,0.5-0.1 c0.4-0.5,0.9-1,1.4-1.4c0.4-0.3,0.8-0.4,1.3-0.6c0.2-0.1,0.3,0,0.4,0.2c0.4,1.1,0.5,2.2,0.1,3.3c-0.1,0.3-0.1,0.6,0.2,0.8 c0.7,0.7,1,1.6,1.1,2.5c0.2,1.2,0.3,2.3,0.1,3.5c-0.2,2.4-1.5,4-3.6,4.9c-0.8,0.3-1.6,0.6-2.5,0.7c-0.1,0-0.1,0-0.1,0.1 c0.2,0.5,0.4,1,0.5,1.5c0.1,0.3,0.1,0.5,0.1,0.8c0,1.7,0,3.5,0,5.2c0,0.2-0.1,0.3-0.2,0.5C21.2,33.1,19.1,33.1,17.1,33.1z"/>
-		</symbol>
-		<symbol id="icon-telegram" viewBox="0 0 40 40">
-			<path d="M17.8,22.7l-0.3,4.7c0.5,0,0.7-0.2,0.9-0.4l2.2-2.1l4.6,3.4c0.8,0.5,1.4,0.2,1.7-0.8l3-14.1l0,0c0.3-1.2-0.5-1.7-1.3-1.4 l-17.7,6.8C9.7,19,9.7,19.7,10.7,20l4.5,1.4l10.5-6.6c0.5-0.3,0.9-0.1,0.6,0.2L17.8,22.7z"/>
-		</symbol>
-	</svg>
-	<!--===============================================================================================-->
-	<script src="/vendor/jquery/jquery-3.2.5.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="/dist/main.bundle.js"></script>
-	<!--===============================================================================================-->
-	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="https://malsup.github.io/jquery.blockUI.js"></script>
-	<!--===============================================================================================-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-sprite">
+	<symbol id="icon-opened-eye" viewBox="0 0 20 20">
+		<path d="M.2 10a11 11 0 0 1 19.6 0A11 11 0 0 1 .2 10zm9.8 4a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+	</symbol>
+	<symbol id="icon-closed-eye" viewBox="0 0 20 20">
+		<path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-2.76 2.75C2.06 12.79.96 11.49.2 10a11 11 0 0 1 12.6-5.64zm3.8 1.85c1.33 1 2.43 2.3 3.2 3.79a11 11 0 0 1-12.62 5.64l1.77-1.78a4 4 0 0 0 4.9-4.9l2.76-2.75zm-.25-3.99l1.42 1.42L3.64 17.78l-1.42-1.42L16.36 2.22z"/>
+	</symbol>
+	<symbol id="icon-upload" viewBox="0 0 400 400">
+		<path d="M39.8,400c0-133.3,0-266.3,0-399.9c1.9,0,3.6,0,5.3,0c66.2,0,132.3,0,198.5-0.1c3.2,0,5.5,0.9,7.8,3.2 c35.1,35.2,70.3,70.4,105.5,105.5c2.4,2.4,3.3,4.8,3.3,8.2c-0.1,92.6-0.1,185.2-0.1,277.7c0,1.7,0,3.4,0,5.4 C253.2,400,146.8,400,39.8,400z M220,320.2c0-30.5,0-60.5,0-91.9c9.3,9.2,17.6,17.3,25.7,25.2c9.3-9.2,18.6-18.4,27.1-26.8 c-24.4-24.5-48.9-49.2-73.4-73.9c-24.2,24.4-48.6,49-72.4,72.9c9.1,9.1,18.4,18.4,28.7,28.7c7.7-7.7,15.9-15.9,24.4-24.3 c0,30,0,60.1,0,90.2C193.5,320.2,206.2,320.2,220,320.2z M260.1,69.7c0,9.9,0,19.9,0,30c10.2,0,20.2,0,30,0 C280.1,89.7,270.2,79.7,260.1,69.7z"/>
+	</symbol>
+	<symbol id="icon-github" viewBox="0 0 40 40">
+		<path d="M17.1,33.1c-0.1-0.1-0.1-0.3-0.1-0.4c0-0.8,0-1.6,0-2.4c0-0.3-0.1-0.3-0.4-0.3c-1.6,0.3-3.1,0.1-4.4-1.1 c-0.3-0.3-0.6-0.7-0.8-1.1c-0.5-0.7-0.9-1.5-1.4-2.2c-0.2-0.3-0.5-0.5-0.7-0.7c-0.1-0.1-0.2-0.3-0.3-0.4c0.2-0.1,0.3-0.1,0.5-0.2 c1,0,1.8,0.4,2.4,1.3c0.3,0.5,0.6,0.9,1,1.3c1.1,1,2.4,1.2,3.7,0.8c0.1,0,0.3-0.2,0.3-0.3c0.1-0.4,0.1-0.8,0.2-1.1 c0.1-0.4,0.3-0.7,0.5-1c-0.5-0.1-1.1-0.2-1.6-0.4c-1.6-0.5-2.9-1.3-3.8-2.6c-0.5-0.8-0.8-1.7-0.9-2.6c-0.1-1.5,0-2.9,0.3-4.4 c0.1-0.6,0.4-1.2,0.9-1.7c0.3-0.3,0.3-0.5,0.2-0.9c-0.4-1.1-0.3-2.1,0.1-3.2C12.9,9,13,8.9,13.3,9c1,0.3,1.8,1,2.4,1.8 c0.1,0.2,0.3,0.4,0.4,0.5c0.8-0.6,1.8-0.7,2.7-0.7c1.4-0.1,2.8-0.1,4.2,0.2c0.3,0.1,0.6,0.2,0.8,0.3c0.2,0.1,0.3,0.1,0.5-0.1 c0.4-0.5,0.9-1,1.4-1.4c0.4-0.3,0.8-0.4,1.3-0.6c0.2-0.1,0.3,0,0.4,0.2c0.4,1.1,0.5,2.2,0.1,3.3c-0.1,0.3-0.1,0.6,0.2,0.8 c0.7,0.7,1,1.6,1.1,2.5c0.2,1.2,0.3,2.3,0.1,3.5c-0.2,2.4-1.5,4-3.6,4.9c-0.8,0.3-1.6,0.6-2.5,0.7c-0.1,0-0.1,0-0.1,0.1 c0.2,0.5,0.4,1,0.5,1.5c0.1,0.3,0.1,0.5,0.1,0.8c0,1.7,0,3.5,0,5.2c0,0.2-0.1,0.3-0.2,0.5C21.2,33.1,19.1,33.1,17.1,33.1z"/>
+	</symbol>
+	<symbol id="icon-telegram" viewBox="0 0 40 40">
+		<path d="M17.8,22.7l-0.3,4.7c0.5,0,0.7-0.2,0.9-0.4l2.2-2.1l4.6,3.4c0.8,0.5,1.4,0.2,1.7-0.8l3-14.1l0,0c0.3-1.2-0.5-1.7-1.3-1.4 l-17.7,6.8C9.7,19,9.7,19.7,10.7,20l4.5,1.4l10.5-6.6c0.5-0.3,0.9-0.1,0.6,0.2L17.8,22.7z"/>
+	</symbol>
+</svg>
+<!--===============================================================================================-->
+<script src="/vendor/jquery/jquery-3.2.5.min.js"></script>
+<!--===============================================================================================-->
+<script src="/dist/main.bundle.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="https://malsup.github.io/jquery.blockUI.js"></script>
+<!--===============================================================================================-->
 </body>
 </html>

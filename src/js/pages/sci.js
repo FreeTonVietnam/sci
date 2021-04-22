@@ -38,7 +38,7 @@ async function drawABIFunctions(abi, row = "") {
  */
 async function callABIFunction(functionName) {
     try {
-        // await TON.changeClient($('input[name="rd"]:checked').val());
+        await TON.changeClient($('input[name="rd"]:checked').val());
         modules.showHideSpinner('hide')
         let abi = JSON.parse(await modules.getAbi());
         let data = modules.getABIFunctionParams(functionName);
