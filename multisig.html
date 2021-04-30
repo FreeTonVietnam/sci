@@ -6,6 +6,7 @@
 	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
 	<title>Multisig wallet interface</title>
 	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="icon" href="/src/images/favicon.ico" type="image/icon type">
 	<link rel="stylesheet" href="/src/css/style.css?v=1" />
 	<script>
 		var root = document.getElementsByTagName('html')[0];
@@ -98,6 +99,13 @@
 										<span class="ui-btn-text">Reset</span>
 									</button>
 								</div>
+							</div>
+						</div><br/>
+						<div class="form-btns" id="deployNewContractOpen">
+							<div class="form-btn">
+								<button class="ui-btn ui-btn--dark" type="button" data-toggle="modal" data-target="#deployAddress">
+									<span class="ui-btn-text">Create new multisig</span>
+								</button>
 							</div>
 						</div>
 					</form>
@@ -334,6 +342,95 @@
 		</div>
 	</div>
 </div>
+
+<!--DEPLOY ADDRESS-->
+<div class="modal" id="deployAddress" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Deploy multisig contract</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+            <div id="deployMultisigBodyPageOne">
+			<div class="modal-body">
+				<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Secret key</span>
+					</div>
+					<input type="text" id="deploySecretKey" class="form-control"/>
+				</div>
+				<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important; margin-bottom: 5px !important;">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Public key</span>
+					</div>
+					<input type="text" id="deployPublicKey" class="form-control"/>
+				</div>
+				<span class="float-right" style="margin-top: 5px; margin-left: 5px;" onclick="generateRandomKeys()">Generate keys</span>
+				<button class="float-right" onclick="generateRandomKeys()">
+					<svg style="width: 25px; height: 25px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.5 2c-5.621 0-10.211 4.443-10.475 10h-3.025l5 6.625 5-6.625h-2.975c.257-3.351 3.06-6 6.475-6 3.584 0 6.5 2.916 6.5 6.5s-2.916 6.5-6.5 6.5c-1.863 0-3.542-.793-4.728-2.053l-2.427 3.216c1.877 1.754 4.389 2.837 7.155 2.837 5.79 0 10.5-4.71 10.5-10.5s-4.71-10.5-10.5-10.5z"/></svg>
+				</button><br/>
+				<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important; margin-bottom: 5px !important;">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Contract type</span>
+					</div>
+					<select class="form-control" id="selectDeployContract">
+						<option value="SetcodeMultisigWallet" selected>SetCodeMultisig</option>
+						<option value="SetcodeMultisigWallet24h">SetCodeMultisig24h</option>
+						<option value="SafeMultisigWallet">SafeMultisig</option>
+					</select>
+				</div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary btn-sm" onclick="deployMultisigSecondPage()">Next</button>
+			</div>
+            </div>
+
+
+            <div id="deployMultisigBodyPageTwo" class="d-none">
+                <div class="modal-body">
+					<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Address</span>
+						</div>
+						<input type="text" id="newDeployedAddress" class="form-control" disabled/>
+					</div>
+
+					<div class="input-group input-group-sm mb-3" style="margin-top: 15px !important;">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Type</span>
+						</div>
+						<input type="text" id="newDeployedType" class="form-control" disabled/>
+					</div>
+
+                    <span id="deployMultisigPubKeys">
+
+                    </span>
+                    <button class="btn btn-secondary btn-sm float-right" style="margin-top: 10px !important;" onclick="addNewPubKey('deploypubkey', 'deployMultisigPubKeys', 'deploykey')">Add</button><br/><br/><br/>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">reqConfirms</span>
+                        </div>
+                        <input type="number" id="deployReqConfirms" class="form-control"/>
+                    </div>
+					<div class="float-right" style="font-size:14px;	line-height:20px;">Balance: <span id="deployedBalance">test</span> TON</div><br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="deployNewContract" onclick="deployNewAddress()" disabled>Deploy</button>
+                </div>
+            </div>
+
+
+		</div>
+	</div>
+</div>
+
+
+
 
 <!--UPDATE REQUEST MODAL-->
 <div class="modal" id="requestModal" tabindex="-1">

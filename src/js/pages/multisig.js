@@ -24,6 +24,7 @@ async function connectToMultisig() {
         if (!contractName) throw new Error(`Unsupported smart contract`);
         multisigData = accData.parsed;
         await prepareDataForMultisign(contractName);
+        $("#deployNewContractOpen").addClass('d-none')
         return drawTransactionsPage();
     } catch (err) {
         modules.showHideSpinner('show');
@@ -162,14 +163,18 @@ async function updateOwnersModalData(pubKeysCount = 1) {
  * Add new pub key input at modal form
  * @returns {Promise<void>}
  */
-async function addNewPubKey() {
-    let pubKeysCount = parseInt($("div[id^='modalpubkey']").sort((a, b) => {
-        return (parseInt((b.id.split('modalpubkey'))[1]) - parseInt((a.id.split('modalpubkey'))[1]))
-    })[0].id.split('modalpubkey')[1]) || 1;
-    $("#modalPubKeys").append(
-        `<div class="input-group input-group-sm mb-1" id="modalpubkey${pubKeysCount + 1}" style="margin-bottom: 0 !important;"><div class="input-group-prepend"><span class="input-group-text">Pub key</span></div>
-              <input type="text" id="pubkey${pubKeysCount + 1}" class="form-control"/>
-              <a href="#" class="href-grey" onclick="removeModalPubKey(${pubKeysCount + 1})">
+async function addNewPubKey(trigger = 'modalpubkey', mainTrigger = 'modalPubKeys', secondTrigger = 'pubkey') {
+    try {
+        var pubKeysCount = parseInt($(`div[id^='${trigger}']`).sort((a, b) => {
+            return (parseInt((b.id.split(trigger))[1]) - parseInt((a.id.split(trigger))[1]))
+        })[0].id.split(trigger)[1]) || 1;
+    } catch {
+        pubKeysCount = 1;
+    }
+    $(`#${mainTrigger}`).append(
+        `<div class="input-group input-group-sm mb-1" id="${trigger}${pubKeysCount + 1}" style="margin-bottom: 0 !important;"><div class="input-group-prepend"><span class="input-group-text">Pub key</span></div>
+              <input type="text" id="${secondTrigger}${pubKeysCount + 1}" class="form-control"/>
+              <a href="#" class="href-grey" onclick="removeModalPubKey(${pubKeysCount + 1}, '${trigger}')">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>
               </a>
          </div>`);
@@ -178,10 +183,11 @@ async function addNewPubKey() {
 /**
  * Remove modal pub key
  * @param id
+ * @param key
  * @returns {Promise<void>}
  */
-async function removeModalPubKey(id) {
-    $(`#modalpubkey${id}`).remove();
+async function removeModalPubKey(id, key) {
+    $(`#${key}${id}`).remove();
 }
 
 /**
@@ -318,9 +324,94 @@ async function updateData(spinnerType, type) {
     }
 }
 
+
+
+// =========== MULTISIG DEPLOY ============
+
+/**
+ * Set random keys
+ * @returns {Promise<void>}
+ */
+async function generateRandomKeys() {
+    let keys = await TON.generateKeys();
+    $("#deploySecretKey").val(keys.secret)
+    $("#deployPublicKey").val(keys.public)
+}
+
+/**
+ * Check deploy data -> gen address -> show second form
+ * @returns {Promise<void>}
+ */
+async function deployMultisigSecondPage() {
+    try {
+        let publicKey = $("#deployPublicKey").val();
+        let secretKey = $("#deploySecretKey").val();
+        let contract = $( "#selectDeployContract option:selected" ).val();
+        if ((publicKey === '') || (secretKey === '')) return modules.alertModal('Error', 'Public and secret required');
+        $("#deployAddress").modal('hide');
+        modules.showHideSpinner('hide');
+        await TON.changeClient($('input[name="rd"]:checked').val());
+        let address = await TON.generateAddress({public: publicKey, secret: secretKey}, contract, {owners: [], reqConfirms: 0})
+        addNewPubKey('deploypubkey', 'deployMultisigPubKeys', 'deploykey')
+        $("#newDeployedType").val(contract);
+        $("#newDeployedAddress").val(address);
+        $("#deployMultisigBodyPageOne").addClass('d-none');
+        $("#deployMultisigBodyPageTwo").removeClass('d-none');
+        listenTransactions(address);
+        $("#deployAddress").modal('show');
+        modules.showHideSpinner('show');
+    } catch (err) {
+        $("#deployMultisigBodyPageOne").modal('show');
+        modules.showHideSpinner('show');
+        return modules.alertModal('Error', typeof err === 'object' ? err.message : err);
+    }
+}
+
+/**
+ * Listen deposit to new not deployed address
+ * @param address
+ * @returns {Promise<unknown>}
+ */
+async function listenTransactions(address) {
+    return new Promise(async (resolve) => {
+        let data = (await TON.getBalanceFromBlockchain(address)).result[0];
+        let balance = data === undefined ? 0 : Math.round((parseInt(data.balance) / 1000000000) * 100) / 100
+        $("#deployedBalance").html(balance);
+        if (balance >= 0.1) $("#deployNewContract").attr('disabled', false);
+        setTimeout(_ => {
+            return resolve(listenTransactions(address))
+        }, 10000)
+    })
+}
+
+/**
+ * Deploy new Address
+ * @returns {Promise<void>}
+ */
+async function deployNewAddress() {
+    try {
+        $("#deployAddress").modal('hide');
+        modules.showHideSpinner('hide');
+        await TON.changeClient($('input[name="rd"]:checked').val());
+        let publicKey = $("#deployPublicKey").val();
+        let secretKey = $("#deploySecretKey").val();
+        let contract = $( "#selectDeployContract option:selected" ).val();
+        let data = await TON.deployAddr({public: publicKey, secret: secretKey}, contract, Array.from($("input[id^='deploykey']"), el => ($(`#${el.id}`).val())), $("#deployReqConfirms").val())
+        modules.showHideSpinner('show');
+        $("#deployMultisigBodyPageOne").removeClass('d-none');
+        $("#deployMultisigBodyPageTwo").addClass('d-none');
+        return modules.alertModal('Success', `Successfully deployed at address ${data.transaction.account_addr}`);
+    } catch (err) {
+        modules.showHideSpinner('show');
+        return modules.alertModal('Error', typeof err === 'object' ? err.message : err);
+    }
+}
+
+
+
 module.exports = {
     createNewMultisignTransaction, updateTransactionsTable, connectToMultisig,
     drawCustodiansPage, addNewPubKey, removeModalPubKey, createNewUpdateOwners,
     deployOrderRequest, ownersRequestsInfo, updateOwnersRequests, drawTransactionsPage,
-    confirmTransaction
+    confirmTransaction, generateRandomKeys, deployMultisigSecondPage, deployNewAddress
 }

@@ -154,4 +154,84 @@ module.exports = {
         let message = await module.exports.encodeGetMessage(abi, address, functionName);
         return (await module.exports.runTvm(abi, boc, message.message))[returnValue];
     },
+
+    /**
+     * Generate random keys
+     * @returns {Promise<KeyPair>}
+     */
+    async generateKeys() {
+        return await client.crypto.generate_random_sign_keys();
+    },
+
+    /**
+     * Generate multisig address
+     * @param keys
+     * @param contractName
+     * @param input
+     * @returns {Promise<string>}
+     */
+    async generateAddress(keys, contractName, input) {
+        let {package: contract} = require(`../../../contracts/${contractName}Contract`)
+        let deployOptions = {
+            abi: {
+                type: 'Contract',
+                value: contract.abi
+            },
+            signer: {
+                type: 'Keys',
+                keys: keys
+            }
+        }
+        deployOptions.deploy_set = {tvc: contract.imageBase64, initial_data: {}};
+        deployOptions.call_set = {
+            function_name: 'constructor', input
+        };
+        let data = await client.abi.encode_message(deployOptions);
+        return data.address;
+    },
+
+    /**
+     * Get transactions data
+     * @param wallet
+     * @returns {Promise<any>}
+     */
+    async getBalanceFromBlockchain(wallet) {
+        return (await client.net.query_collection({
+            collection: "accounts",
+            filter: {id: {eq: wallet}},
+            result: "balance(format: DEC)",
+        }));
+    },
+
+    /**
+     * Deploy address
+     * @param keys
+     * @param contractName
+     * @param owners
+     * @param reqConfirms
+     * @returns {Promise<void>}
+     */
+    async deployAddr(keys, contractName, owners, reqConfirms) {
+        let {package: contract} = require(`../../../contracts/${contractName}Contract`)
+        let deployOptions = {
+            abi: {
+                type: 'Contract',
+                value: contract.abi
+            },
+            signer: {
+                type: 'Keys',
+                keys: keys
+            }
+        }
+        deployOptions.deploy_set = {tvc: contract.imageBase64, initial_data: {}};
+        deployOptions.call_set = {
+            function_name: 'constructor', input: {
+                owners, reqConfirms
+            }
+        };
+        return await client.processing.process_message({
+            send_events: false,
+            message_encode_params: deployOptions
+        })
+    }
 }

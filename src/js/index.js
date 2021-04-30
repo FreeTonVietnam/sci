@@ -34,5 +34,8 @@ window.deployOrderRequest = multisig.deployOrderRequest;
 window.ownersRequestsInfo = multisig.ownersRequestsInfo;
 window.updateOwnersRequests = multisig.updateOwnersRequests;
 window.drawTransactionsPage = multisig.drawTransactionsPage;
+window.generateRandomKeys = multisig.generateRandomKeys;
+window.deployMultisigSecondPage = multisig.deployMultisigSecondPage;
+window.deployNewAddress = multisig.deployNewAddress;
 
 window.updateCollapse = updateCollapse;

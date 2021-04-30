@@ -10,10 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "@tonclient/core": "1.9.0",
+    "@tonclient/lib-node": "^1.13.0",
     "@tonclient/lib-web": "1.9.0",
     "big-integer": "^1.6.48",
     "hex2dec": "^1.1.2",
